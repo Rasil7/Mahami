@@ -39,7 +39,6 @@
             z-index: -1;
         }
 
-        /* Additional Palm Trees */
         .palm-tree {
             position: fixed;
             opacity: 0.06;
@@ -74,6 +73,100 @@
             background-size: contain;
         }
 
+        /* Login Screen */
+        .login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            border: 2px solid rgba(139, 69, 19, 0.3);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-title {
+            font-family: 'Scheherazade New', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #8b4513, #d2691e, #a0522d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+        }
+
+        .google-signin-btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .google-signin-btn:hover {
+            background: #357ae8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid rgba(139, 69, 19, 0.3);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #8b4513;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #5d4e37;
+        }
+
+        .logout-btn {
+            background: #722f37;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #8b1538;
+            transform: scale(1.05);
+        }
+
         /* Header Styling */
         .header {
             text-align: center;
@@ -85,10 +178,16 @@
             margin-bottom: 30px;
         }
 
-        .lang-toggle {
+        .header-controls {
             position: absolute;
             top: 20px;
             right: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .lang-toggle {
             background: linear-gradient(45deg, #8b4513, #a0522d);
             border: none;
             border-radius: 25px;
@@ -306,7 +405,6 @@
             color: #5d4e37;
             font-weight: 600;
             flex: 1;
-            /* Shining effect */
             background: linear-gradient(45deg, #5d4e37, #8b4513, #5d4e37);
             background-size: 200% 100%;
             -webkit-background-clip: text;
@@ -425,6 +523,10 @@
             font-family: 'Amiri', serif;
         }
 
+        .hidden {
+            display: none !important;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .title {
@@ -455,54 +557,83 @@
     <div class="palm-tree palm-tree-2"></div>
     <div class="palm-tree palm-tree-3"></div>
     
-    <div class="header">
-        <button class="lang-toggle" onclick="toggleLanguage()">
-            <span id="langText">English</span>
-        </button>
-        <h1 class="title" id="mainTitle">قائمة المهام</h1>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <h1 class="login-title" id="loginTitle">قائمة المهام</h1>
+            <p id="loginSubtitle" style="margin-bottom: 30px; color: #8b7355;">سجل دخولك للمتابعة</p>
+            <button id="googleSignInBtn" class="google-signin-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                <span id="googleSignInText">تسجيل دخول بجوجل</span>
+            </button>
+        </div>
     </div>
 
-    <div class="container">
-        <div class="category-tabs">
-            <div class="category-tab active" data-category="daily" onclick="switchCategory('daily')">
-                <span id="dailyTab">المهام اليومية</span>
-                <div class="task-count" id="dailyCount">0</div>
-            </div>
-            <div class="category-tab" data-category="weekly" onclick="switchCategory('weekly')">
-                <span id="weeklyTab">المهام الأسبوعية</span>
-                <div class="task-count" id="weeklyCount">0</div>
-            </div>
-            <div class="category-tab" data-category="monthly" onclick="switchCategory('monthly')">
-                <span id="monthlyTab">المهام الشهرية</span>
-                <div class="task-count" id="monthlyCount">0</div>
-            </div>
-            <div class="category-tab" data-category="yearly" onclick="switchCategory('yearly')">
-                <span id="yearlyTab">الأهداف السنوية</span>
-                <div class="task-count" id="yearlyCount">0</div>
-            </div>
-        </div>
-
-        <div class="input-section">
-            <div class="input-form">
-                <div class="input-row">
-                    <input type="text" id="taskInput" placeholder="اكتب مهمة جديدة..." />
-                </div>
-                <div class="action-buttons">
-                    <button class="btn add-btn" onclick="addTask()">
-                        <span id="addBtnText">إضافة مهمة</span>
-                    </button>
-                    <button class="btn clear-btn" onclick="clearAllTasks()">
-                        <span id="clearBtnText">مسح الكل</span>
+    <!-- Main App -->
+    <div id="mainApp" class="hidden">
+        <div class="header">
+            <div class="header-controls">
+                <div class="user-info">
+                    <img id="userAvatar" src="" alt="User" class="user-avatar">
+                    <span id="userName" class="user-name"></span>
+                    <button id="logoutBtn" class="logout-btn">
+                        <span id="logoutText">خروج</span>
                     </button>
                 </div>
+                <button class="lang-toggle" onclick="toggleLanguage()">
+                    <span id="langText">English</span>
+                </button>
             </div>
+            <h1 class="title" id="mainTitle">قائمة المهام</h1>
         </div>
 
-        <div class="tasks-container">
-            <div id="tasksList">
-                <div class="empty-state">
-                    <div class="icon">🎯</div>
-                    <p id="emptyMessage">لا توجد مهام في هذه الفئة<br>ابدأ بإضافة مهمة جديدة!</p>
+        <div class="container">
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="daily" onclick="switchCategory('daily')">
+                    <span id="dailyTab">المهام اليومية</span>
+                    <div class="task-count" id="dailyCount">0</div>
+                </div>
+                <div class="category-tab" data-category="weekly" onclick="switchCategory('weekly')">
+                    <span id="weeklyTab">المهام الأسبوعية</span>
+                    <div class="task-count" id="weeklyCount">0</div>
+                </div>
+                <div class="category-tab" data-category="monthly" onclick="switchCategory('monthly')">
+                    <span id="monthlyTab">المهام الشهرية</span>
+                    <div class="task-count" id="monthlyCount">0</div>
+                </div>
+                <div class="category-tab" data-category="yearly" onclick="switchCategory('yearly')">
+                    <span id="yearlyTab">الأهداف السنوية</span>
+                    <div class="task-count" id="yearlyCount">0</div>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <div class="input-form">
+                    <div class="input-row">
+                        <input type="text" id="taskInput" placeholder="اكتب مهمة جديدة..." />
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn add-btn" onclick="addTask()">
+                            <span id="addBtnText">إضافة مهمة</span>
+                        </button>
+                        <button class="btn clear-btn" onclick="clearAllTasks()">
+                            <span id="clearBtnText">مسح الكل</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tasks-container">
+                <div id="tasksList">
+                    <div class="empty-state">
+                        <div class="icon">🎯</div>
+                        <p id="emptyMessage">لا توجد مهام في هذه الفئة<br>ابدأ بإضافة مهمة جديدة!</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -513,21 +644,27 @@
     </div>
 
     <script>
-        let tasks = JSON.parse(localStorage.getItem('arabicTasks')) || [];
-        let taskId = parseInt(localStorage.getItem('taskCounter')) || 1;
-        let currentLang = localStorage.getItem('language') || 'ar';
+        // Global variables
+        let tasks = [];
+        let taskId = 1;
+        let currentLang = 'ar';
         let currentCategory = 'daily';
+        let currentUser = null;
 
         // Language translations
         const translations = {
             ar: {
                 title: 'قائمة المهام',
+                loginTitle: 'قائمة المهام',
+                loginSubtitle: 'سجل دخولك للمتابعة',
+                googleSignIn: 'تسجيل دخول بجوجل',
                 placeholder: 'اكتب مهمة جديدة...',
                 addBtn: 'إضافة مهمة',
                 clearBtn: 'مسح الكل',
                 completeBtn: 'إنجاز',
                 undoBtn: 'إلغاء',
                 deleteBtn: 'حذف',
+                logoutBtn: 'خروج',
                 emptyState: 'لا توجد مهام في هذه الفئة<br>ابدأ بإضافة مهمة جديدة!',
                 langToggle: 'English',
                 dailyTab: 'المهام اليومية',
@@ -538,12 +675,16 @@
             },
             en: {
                 title: 'To-Do List',
+                loginTitle: 'To-Do List',
+                loginSubtitle: 'Sign in to continue',
+                googleSignIn: 'Sign in with Google',
                 placeholder: 'Write a new task...',
                 addBtn: 'Add Task',
                 clearBtn: 'Clear All',
                 completeBtn: 'Complete',
                 undoBtn: 'Undo',
                 deleteBtn: 'Delete',
+                logoutBtn: 'Logout',
                 emptyState: 'No tasks in this category<br>Start by adding a new task!',
                 langToggle: 'العربية',
                 dailyTab: 'Daily Tasks',
@@ -554,189 +695,12 @@
             }
         };
 
-        // Hijri to Gregorian conversion (simplified)
-        function formatDate(date) {
-            const options = { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                calendar: currentLang === 'ar' ? 'islamic' : 'gregory'
-            };
-            return new Intl.DateTimeFormat(currentLang === 'ar' ? 'ar-SA' : 'en-US', options).format(date);
+        // Mock Google Sign-In simulation
+        function initializeGoogleSignIn() {
+            const signInBtn = document.getElementById('googleSignInBtn');
+            signInBtn.addEventListener('click', handleGoogleSignIn);
         }
 
-        // Initialize page
-        function init() {
-            document.documentElement.setAttribute('lang', currentLang);
-            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
-            updateTexts();
-            updateTaskCounts();
-            renderTasks();
-        }
-
-        // Toggle language
-        function toggleLanguage() {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            localStorage.setItem('language', currentLang);
-            document.documentElement.setAttribute('lang', currentLang);
-            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
-            updateTexts();
-            renderTasks();
-        }
-
-        // Update interface texts
-        function updateTexts() {
-            const t = translations[currentLang];
-            document.getElementById('mainTitle').textContent = t.title;
-            document.getElementById('taskInput').placeholder = t.placeholder;
-            document.getElementById('addBtnText').textContent = t.addBtn;
-            document.getElementById('clearBtnText').textContent = t.clearBtn;
-            document.getElementById('langText').textContent = t.langToggle;
-            document.getElementById('dailyTab').textContent = t.dailyTab;
-            document.getElementById('weeklyTab').textContent = t.weeklyTab;
-            document.getElementById('monthlyTab').textContent = t.monthlyTab;
-            document.getElementById('yearlyTab').textContent = t.yearlyTab;
-            document.getElementById('emptyMessage').innerHTML = t.emptyState;
-        }
-
-        // Switch category
-        function switchCategory(category) {
-            currentCategory = category;
-            document.querySelectorAll('.category-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelector(`[data-category="${category}"]`).classList.add('active');
-            renderTasks();
-        }
-
-        // Add task
-        function addTask() {
-            const taskText = document.getElementById('taskInput').value.trim();
-            
-            if (taskText === '') {
-                document.getElementById('taskInput').focus();
-                return;
-            }
-
-            const newTask = {
-                id: taskId++,
-                text: taskText,
-                category: currentCategory,
-                completed: false,
-                createdAt: new Date().toISOString()
-            };
-
-            tasks.push(newTask);
-            localStorage.setItem('arabicTasks', JSON.stringify(tasks));
-            localStorage.setItem('taskCounter', taskId.toString());
-            
-            document.getElementById('taskInput').value = '';
-            updateTaskCounts();
-            renderTasks();
-            
-            // Animation feedback
-            const addBtn = document.querySelector('.add-btn');
-            addBtn.style.transform = 'scale(0.95)';
+        function handleGoogleSignIn() {
+            // Simulate Google Sign-In
             setTimeout(() => {
-                addBtn.style.transform = 'scale(1)';
-            }, 150);
-        }
-
-        // Toggle task completion
-        function toggleTask(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.completed = !task.completed;
-                localStorage.setItem('arabicTasks', JSON.stringify(tasks));
-                updateTaskCounts();
-                renderTasks();
-            }
-        }
-
-        // Delete task
-        function deleteTask(id) {
-            tasks = tasks.filter(t => t.id !== id);
-            localStorage.setItem('arabicTasks', JSON.stringify(tasks));
-            updateTaskCounts();
-            renderTasks();
-        }
-
-        // Clear all tasks - FIXED
-        function clearAllTasks() {
-            const t = translations[currentLang];
-            
-            // Check if there are any tasks to clear
-            if (tasks.length === 0) {
-                alert(currentLang === 'ar' ? 'لا توجد مهام للحذف' : 'No tasks to delete');
-                return;
-            }
-            
-            // Show confirmation dialog
-            if (confirm(t.confirmClear)) {
-                // Clear all tasks
-                tasks = [];
-                taskId = 1;
-                
-                // Update localStorage
-                localStorage.setItem('arabicTasks', JSON.stringify(tasks));
-                localStorage.setItem('taskCounter', taskId.toString());
-                
-                // Update UI
-                updateTaskCounts();
-                renderTasks();
-                
-                // Show success message
-                const clearBtn = document.querySelector('.clear-btn');
-                const originalText = clearBtn.textContent;
-                clearBtn.textContent = currentLang === 'ar' ? 'تم المسح!' : 'Cleared!';
-                clearBtn.style.background = 'linear-gradient(45deg, #228B22, #32CD32)';
-                
-                setTimeout(() => {
-                    clearBtn.textContent = originalText;
-                    clearBtn.style.background = 'linear-gradient(45deg, #722f37, #8b1538)';
-                }, 1500);
-            }
-        }
-
-        // Update task counts
-        function updateTaskCounts() {
-            const counts = {
-                daily: tasks.filter(t => t.category === 'daily' && !t.completed).length,
-                weekly: tasks.filter(t => t.category === 'weekly' && !t.completed).length,
-                monthly: tasks.filter(t => t.category === 'monthly' && !t.completed).length,
-                yearly: tasks.filter(t => t.category === 'yearly' && !t.completed).length
-            };
-
-            document.getElementById('dailyCount').textContent = counts.daily;
-            document.getElementById('weeklyCount').textContent = counts.weekly;
-            document.getElementById('monthlyCount').textContent = counts.monthly;
-            document.getElementById('yearlyCount').textContent = counts.yearly;
-        }
-
-        // Render tasks
-        function renderTasks() {
-            const t = translations[currentLang];
-            const filteredTasks = tasks.filter(task => task.category === currentCategory);
-            
-            if (filteredTasks.length === 0) {
-                document.getElementById('tasksList').innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">🎯</div>
-                        <p>${t.emptyState}</p>
-                    </div>
-                `;
-                return;
-            }
-
-            const tasksHtml = filteredTasks
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                .map(task => {
-                    const completedClass = task.completed ? 'completed' : '';
-                    
-                    return `
-                        <div class="task-item ${completedClass}" data-id="${task.id}">
-                            <div class="task-header">
-                                <div class="task-text">${task.text}</div>
-                            </div>
-                            <div class="task-meta">
-                                <span class="task-category">${t
