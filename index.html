@@ -2,34 +2,68 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>قائمة المهام</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet"/>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
-    /* -- (كلما كان سبق – انسخه كما هو من كودك القديم من <style> وحتى @media --) */
-    * {margin:0;padding:0;box-sizing:border-box;}
-    body {font-family:'Amiri',serif;background:linear-gradient(135deg,#fefefe,#f8f8f8);min-height:100vh;color:#5d4e37;position:relative;overflow-x:hidden;}
-    /* – آثار النخيل– */
-    body::before,.palm-tree {pointer-events:none;z-index:-1;opacity:0.06;position:fixed;}
-    body::before {content:'';top:0;left:0;width:100%;height:100%;
-      background-image:
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.1"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>'),
-        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.08"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>');
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Amiri', serif;
+      background:linear-gradient(135deg,#fefefe,#f8f8f8);
+      min-height:100vh;
+      color:#5d4e37;
+      overflow-x:hidden;
+      position:relative;
+    }
+    /* تأثيرات النخيل خلفية */
+    body::before,.palm-tree { pointer-events:none; position:fixed; z-index:-1; opacity:0.06; }
+    body::before {
+      content:'';
+      top:0; left:0; width:100%; height:100%;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.1"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>'),
+                      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.08"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>');
       background-size:300px 400px,250px 350px;
       background-position:-50px 20%,calc(100%+50px) 60%;
       background-repeat:no-repeat;
     }
-    .palm-tree-1 {top:10%;left:5%;width:180px;height:250px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>') no-repeat center;background-size:contain;}
-    .palm-tree-2 {top:40%;right:8%;width:160px;height:220px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>') no-repeat center;background-size:contain;}
-    .palm-tree-3 {bottom:20%;left:10%;width:140px;height:190px;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 160 Q88 125 75 105 Q62 85 45 82 Q65 84 85 92 Q92 98 100 110 Q108 98 115 92 Q135 84 155 82 Q138 85 125 105 Q112 125 100 160 Z"/><rect x="95" y="160" width="10" height="60" fill="%238B4513"/><ellipse cx="100" cy="220" rx="15" ry="6" fill="%23228B22"/></g></svg>') no-repeat center;background-size:contain;}
-    .login-screen, .hidden {display:none;} .login-screen.active{display:flex;}
-    .login-container{background:rgba(255,255,255,0.95);backdrop-filter:blur(15px);border-radius:30px;padding:50px;text-align:center;border:2px solid rgba(139,69,19,0.3);box-shadow:0 15px 35px rgba(139,69,19,0.2);max-width:400px;width:90%;}
-    .login-title{font-family:'Scheherazade New',serif;font-size:3rem;font-weight:700;background:linear-gradient(45deg,#8b4513,#d2691e,#a0522d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:30px;}
-    .google-signin-btn{background:#4285f4;color:#fff;border:none;border-radius:25px;padding:15px 30px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s;box-shadow:0 4px 15px rgba(66,133,244,.3);display:flex;align-items:center;gap:10px;margin:0 auto;}
-    .google-signin-btn:hover{background:#357ae8;transform:translateY(-2px);box-shadow:0 6px 20px rgba(66,133,244,.4);}
-    /* – استمرّ بنسخ باقي الستايل الأصلي (الهيدر، المدخل، المهام، الفوتر...) */
-    /* ... */
+    .palm-tree-1 { top:10%; left:5%; width:180px; height:250px; background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"...') no-repeat center;background-size:contain;}
+    .palm-tree-2 { top:40%; right:8%; width:160px; height:220px; background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"...') no-repeat center;background-size:contain;}
+    .palm-tree-3 { bottom:20%; left:10%; width:140px; height:190px; background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"...') no-repeat center;background-size:contain;}
+
+    /* شاشة تسجيل الدخول */
+    .login-screen {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:fixed;
+      top:0; left:0; width:100%; height:100%;
+      background:rgba(255,255,255,0.9);
+      backdrop-filter:blur(10px);
+      z-index:10;
+    }
+    .login-container {
+      background:rgba(255,255,255,0.95);
+      backdrop-filter:blur(15px);
+      border-radius:30px;
+      padding:50px;
+      text-align:center;
+      border:2px solid rgba(139,69,19,0.3);
+      box-shadow:0 15px 35px rgba(139,69,19,0.2);
+      max-width:400px;
+      width:90%;
+    }
+    .login-title {
+      font-family:'Scheherazade New',serif;
+      font-size:3rem;font-weight:700;
+      background:linear-gradient(45deg,#8b4513,#d2691e,#a0522d);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      margin-bottom:30px;
+    }
+    .google-signin-btn { margin:0 auto; }
+
+    /* باقي CSS للواجهة الرئيسية... */
+    /* انسخ كل ستايلاتك القديمة الخاصة بال mainApp والفوتر هنا */
   </style>
 </head>
 <body>
@@ -37,42 +71,58 @@
   <div class="palm-tree palm-tree-2"></div>
   <div class="palm-tree palm-tree-3"></div>
 
-  <div id="loginScreen" class="login-screen active">
+  <!-- شاشة تسجيل الدخول مركزة تمامًا -->
+  <div id="loginScreen" class="login-screen">
     <div class="login-container">
       <h1 class="login-title" id="loginTitle">قائمة المهام</h1>
       <p id="loginSubtitle" style="margin-bottom:30px;color:#8b7355;">سجل دخولك للمتابعة</p>
       <div id="googleSignInBtn"></div>
+      <p id="errorMsg" style="color:red; margin-top:15px; display:none;">لم تتم عملية تسجيل الدخول، ربما تم رفض الأذونات.</p>
     </div>
   </div>
 
+  <!-- الواجهة الرئيسية مخفية عند البدء -->
   <div id="mainApp" class="hidden">
-    <!-- – هنا كل ما يخص واجهة التطبيق: الهيدر، المدخل، قائمة المهام، الفوتر -->
-    <!-- انسخ واجهة mainApp بالكامل من كودك السابق -->
+    <!-- انسخ هنا كل عناصر الواجهة: header, category-tabs, input-section, tasks-container, footer -->
+    <!-- تأكد من تضمين عناصر: userAvatar, userName, logoutBtn, lang-toggle, taskInput، etc. -->
   </div>
 
-  <div class="footer">Developed by Rasil</div>
-
   <script>
-    let tasks = [], taskId = 1, currentLang = 'ar', currentCategory = 'daily', currentUser = null;
+    let tasks = [], currentLang='ar', currentCategory='daily', currentUser=null;
     const translations = {
-      ar: { title:'قائمة المهام', loginSubtitle:'سجل دخولك للمتابعة', googleSignIn:'تسجيل دخول بجوجل', placeholder:'اكتب مهمة جديدة...', addBtn:'إضافة مهمة', clearBtn:'مسح الكل', completeBtn:'إنجاز', undoBtn:'إلغاء', deleteBtn:'حذف', logoutBtn:'خروج', emptyState:'لا توجد مهام في هذه الفئة<br>ابدأ بإضافة مهمة جديدة!', langToggle:'English', dailyTab:'المهام اليومية', weeklyTab:'المهام الأسبوعية', monthlyTab:'المهام الشهرية', yearlyTab:'الأهداف السنوية', confirmClear:'هل أنت متأكد من حذف جميع المهام؟'},
-      en: { title:'To-Do List', loginSubtitle:'Sign in to continue', googleSignIn:'Sign in with Google', placeholder:'Write a new task...', addBtn:'Add Task', clearBtn:'Clear All', completeBtn:'Complete', undoBtn:'Undo', deleteBtn:'Delete', logoutBtn:'Logout', emptyState:'No tasks in this category<br>Start by adding a new task!', langToggle:'العربية', dailyTab:'Daily Tasks', weeklyTab:'Weekly Tasks', monthlyTab:'Monthly Tasks', yearlyTab:'Year Goals', confirmClear:'Are you sure you want to delete all tasks?'}
+      ar:{ /* ... ترجماتك ... */ },
+      en:{ /* ... ترجماتك ... */ }
     };
 
-    function handleCredentialResponse(response) {
-      const payload = JSON.parse(atob(response.credential.split('.')[1]));
-      currentUser = { name: payload.name, picture: payload.picture, sub: payload.sub };
-      loadTasks(); onSignIn(); updateLanguage(); updateTaskCounts(); renderTasksUI();
+    function handleCredentialResponse(res) {
+      if(!res.credential) {
+        showError();
+        return;
+      }
+      const payload = JSON.parse(atob(res.credential.split('.')[1]));
+      currentUser = { name:payload.name, picture:payload.picture, sub:payload.sub };
+      hideError();
+      loadTasks();
+      onSignIn();
+      initMainApp();
+    }
+
+    function showError() {
+      document.getElementById('errorMsg').style.display = 'block';
+    }
+    function hideError() {
+      document.getElementById('errorMsg').style.display = 'none';
     }
 
     function renderGoogleButton() {
       google.accounts.id.initialize({
         client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
-        callback: handleCredentialResponse
+        callback: handleCredentialResponse,
+        ux_mode: 'popup'
       });
       google.accounts.id.renderButton(
         document.getElementById('googleSignInBtn'),
-        { theme:'outline', size:'large', locale: currentLang }
+        { theme:'outline', size:'large', locale:currentLang }
       );
     }
 
@@ -81,36 +131,55 @@
     }
 
     function onSignIn() {
-      document.getElementById('loginScreen').classList.remove('active');
+      document.getElementById('loginScreen').style.display='none';
       document.getElementById('mainApp').classList.remove('hidden');
-      document.getElementById('userName').textContent = currentUser.name;
-      document.getElementById('userAvatar').src = currentUser.picture;
     }
 
     function logout() {
-      currentUser = null; tasks = []; saveTasks();
+      currentUser=null; tasks=[]; saveTasks();
       google.accounts.id.disableAutoSelect();
       document.getElementById('mainApp').classList.add('hidden');
-      document.getElementById('loginScreen').classList.add('active');
+      document.getElementById('loginScreen').style.display='flex';
     }
 
     function saveTasks() {
-      if (currentUser) localStorage.setItem(`tasks_${currentUser.sub}`, JSON.stringify(tasks));
+      if(currentUser) localStorage.setItem(`tasks_${currentUser.sub}`, JSON.stringify(tasks));
     }
     function loadTasks() {
-      if (currentUser) {
-        const data = localStorage.getItem(`tasks_${currentUser.sub}`);
-        tasks = data ? JSON.parse(data) : [];
+      if(currentUser) {
+        const d = localStorage.getItem(`tasks_${currentUser.sub}`);
+        tasks = d?JSON.parse(d):[];
       }
     }
 
-    function updateLanguage() { /* – انسخ من كودك الأصلي */ }
-    function setupEventListeners() { /* – انسخ إذا كانت لديك مثل on clear, add, toggle lang */ }
-    function switchCategory(cat) { currentCategory = cat; renderTasksUI(); updateTaskCounts(); }
-    function addTask() { /* – إنشاء المهمة + push على tasks */ saveTasks(); renderTasksUI(); updateTaskCounts(); }
-    function clearAllTasks() { if (confirm(translations[currentLang].confirmClear)) { tasks = []; saveTasks(); renderTasksUI(); updateTaskCounts(); } }
-    function renderTasksUI() { /* – تفريغ #tasksList، إضافة كل مهمة حسب الفئة */ }
-    function updateTaskCounts() { /* – عد المهام حسب كل فئة + عرض العدد */ }
+    function initMainApp() {
+      document.getElementById('userName').textContent = currentUser.name;
+      document.getElementById('userAvatar').src = currentUser.picture;
+      // هنا تنادي init الدوال: updateLanguage(), setupEventListeners(), renderTasksUI(), updateTaskCounts()
+      updateLanguage();
+      setupEventListeners();
+      renderTasksUI();
+      updateTaskCounts();
+    }
+
+    // أمثلة للدوال:
+    function setupEventListeners() {
+      document.getElementById('logoutBtn').addEventListener('click', logout);
+      document.querySelector('.lang-toggle').addEventListener('click', toggleLanguage);
+      // أضف مستمع add-task, clear-all, switch-category, complete, delete
+    }
+
+    function toggleLanguage() {
+      currentLang = currentLang==='ar'?'en':'ar';
+      updateLanguage();
+      // إعادة تهيئة زر Google ليتوافق مع اللغة الجديدة
+      renderGoogleButton();
+      renderTasksUI();
+      updateTaskCounts();
+    }
+
+    // أكمل دوال: updateLanguage(), addTask(), clearAllTasks(), switchCategory(), renderTasksUI(), updateTaskCounts()
+    // انسخها من كودك القديم وادمجها إلى هنا
 
     window.onload = init;
   </script>
