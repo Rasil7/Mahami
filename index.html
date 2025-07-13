@@ -6,6 +6,11 @@
   <title>قائمة المهام</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Scheherazade+New&display=swap" rel="stylesheet" />
+   <title>مهامي مع Google وFirebase</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
   <style>
     body {
       font-family: 'Amiri', serif;
@@ -202,6 +207,13 @@
   </div>
 
   <div class="footer">Developed by Rasil</div>
+    <h2>مهامي</h2>
+  <div id="buttonDiv"></div>
+  <div id="taskSection" style="display:none;">
+    <input type="text" id="taskInput" placeholder="اكتب مهمة جديدة" />
+    <button onclick="addTask()">إضافة</button>
+    <ul id="taskList"></ul>
+  </div>
 
 <script>
 const translations = {
@@ -415,6 +427,89 @@ document.getElementById('tasksList').addEventListener('click', e => {
     updateCounts();
   }
 });
+      // 1. إعداد Firebase
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "XXXXXXXX",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentUserEmail = null;
+
+    // 2. Google Sign-In
+    function handleCredentialResponse(response) {
+      const token = response.credential;
+
+      const decoded = parseJwt(token);
+      currentUserEmail = decoded.email;
+
+      document.getElementById("buttonDiv").style.display = "none";
+      document.getElementById("taskSection").style.display = "block";
+
+      loadTasks(); // تحميل المهام من Firebase
+    }
+
+    function parseJwt(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      return JSON.parse(decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join('')));
+    }
+
+    window.onload = function() {
+      google.accounts.id.initialize({
+        client_id: "YOUR_GOOGLE_CLIENT_ID",
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("buttonDiv"),
+        { theme: "outline", size: "large" }
+      );
+    };
+
+    // 3. إضافة مهمة جديدة
+    function addTask() {
+      const taskText = document.getElementById("taskInput").value.trim();
+      if (!taskText || !currentUserEmail) return;
+
+      db.collection("tasks").add({
+        email: currentUserEmail,
+        task: taskText,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("taskInput").value = "";
+        loadTasks();
+      });
+    }
+
+    // 4. تحميل المهام للمستخدم الحالي
+    function loadTasks() {
+      if (!currentUserEmail) return;
+
+      db.collection("tasks")
+        .where("email", "==", currentUserEmail)
+        .orderBy("timestamp", "desc")
+        .get()
+        .then(snapshot => {
+          const list = document.getElementById("taskList");
+          list.innerHTML = "";
+          snapshot.forEach(doc => {
+            const li = document.createElement("li");
+            li.textContent = doc.data().task;
+            list.appendChild(li);
+          });
+        });
+    }
+
 </script>
 </body>
 </html>
