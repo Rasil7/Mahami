@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -16,9 +15,58 @@
       direction: rtl;
     }
 
-    .palm {
-      display: none;
-    }
+        /* Palm Tree Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.1"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>'),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.08"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>');
+            background-size: 300px 400px, 250px 350px;
+            background-position: -50px 20%, calc(100% + 50px) 60%;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Additional Palm Trees */
+        .palm-tree {
+            position: fixed;
+            opacity: 0.06;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .palm-tree-1 {
+            top: 10%;
+            left: 5%;
+            width: 180px;
+            height: 250px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        .palm-tree-2 {
+            top: 40%;
+            right: 8%;
+            width: 160px;
+            height: 220px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        .palm-tree-3 {
+            bottom: 20%;
+            left: 10%;
+            width: 140px;
+            height: 190px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 160 Q88 125 75 105 Q62 85 45 82 Q65 84 85 92 Q92 98 100 110 Q108 98 115 92 Q135 84 155 82 Q138 85 125 105 Q112 125 100 160 Z"/><rect x="95" y="160" width="10" height="60" fill="%238B4513"/><ellipse cx="100" cy="220" rx="15" ry="6" fill="%23228B22"/></g></svg>') no-repeat center;
+            background-size: contain;
+        }
 
     .lang-toggle {
       position: fixed;
@@ -166,7 +214,9 @@
   </style>
 </head>
 <body>
-  <div class="palm" style="display: none;"></div>
+     <div class="palm-tree palm-tree-1"></div>
+    <div class="palm-tree palm-tree-2"></div>
+    <div class="palm-tree palm-tree-3"></div>
 
   <button id="langToggle" class="lang-toggle">English</button>
 
@@ -204,218 +254,5 @@
 
   <div class="footer">Developed by Rasil</div>
 <script type="module" src="./main.js"></script>
-<script>
-const translations = {
-  ar: {
-    add: "إضافة مهمة",
-    clear: "مسح الكل",
-    complete: "إنجاز",
-    cancel: "إلغاء",
-    delete: "حذف",
-    daily: "المهام اليومية",
-    weekly: "المهام الأسبوعية",
-    monthly: "المهام الشهرية",
-    "year goal": "الأهداف السنوية",
-    placeholder: "أكتب مهمة جديدة...",
-    title: "قائمة المهام",
-    subtitle: "ابدأ بإدارة مهامك الآن",
-    demo: "تجربة التطبيق",
-    signin: "تسجيل الدخول باستخدام Google",
-    confirmClear: "هل أنت متأكد؟",
-    empty: "لا توجد مهام في هذه الفئة<br>ابدأ بإضافة مهمة جديدة!"
-  },
-  en: {
-    add: "Add Task",
-    clear: "Clear All",
-    complete: "Complete",
-    cancel: "Undo",
-    delete: "Delete",
-    daily: "Daily Tasks",
-    weekly: "Weekly Tasks",
-    monthly: "Monthly Tasks",
-    "year goal": "Yearly Goals",
-    placeholder: "Write a new task...",
-    title: "Task List",
-    subtitle: "Start managing your tasks now",
-    demo: "Try App",
-    signin: "Sign in with Google",
-    confirmClear: "Are you sure?",
-    empty: "No tasks in this category<br>Start by adding one!"
-  }
-};
-
-let language = 'ar';
-let tasks = [];
-let cat = 'daily';
-let isGoogleUser = false;
-
-function setLanguage(lang) {
-  language = lang;
-  document.getElementById('addBtn').textContent = translations[lang].add;
-  document.getElementById('clearBtn').textContent = translations[lang].clear;
-  document.getElementById('taskInput').placeholder = translations[lang].placeholder;
-  document.querySelector('.login-title').textContent = translations[lang].title;
-  document.querySelector('.login-subtitle').textContent = translations[lang].subtitle;
-  document.querySelector('.title').textContent = translations[lang].title;
-  document.getElementById('demoLoginBtn').textContent = translations[lang].demo;
-  document.getElementById('langToggle').textContent = lang === 'ar' ? 'English' : 'العربية';
-  document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  document.querySelectorAll('.category-tab').forEach(tab => {
-    const cat = tab.dataset.cat;
-    tab.querySelector('span').textContent = translations[lang][cat];
-  });
-  render();
-}
-
-document.getElementById('langToggle').onclick = () => {
-  setLanguage(language === 'ar' ? 'en' : 'ar');
-};
-
-window.onload = () => {
-  google.accounts.id.initialize({
-    client_id: "647272644166-5vb58i3eacufm2t6stoe2c2qqs1sc9v5.apps.googleusercontent.com",
-    callback: handleCredentialResponse
-  });
-  google.accounts.id.renderButton(
-    document.getElementById("googleSignInBtn"),
-    { theme: "outline", size: "large", text: "signin_with" }
-  );
-  setLanguage(language);
-};
-
-function parseJwt(token) {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-  return JSON.parse(jsonPayload);
-}
-
-function handleCredentialResponse(response) {
-  const decoded = parseJwt(response.credential);
-  isGoogleUser = true;
-  document.getElementById('loginScreen').classList.remove('active');
-  document.getElementById('mainApp').classList.add('active');
-  document.getElementById('userAvatar').src = decoded.picture;
-  document.getElementById('userName').textContent = decoded.name;
-  document.getElementById('userInfo').classList.remove('hidden');
-  updateCounts();
-}
-
-document.getElementById("demoLoginBtn").onclick = () => {
-  isGoogleUser = false;
-  document.getElementById("loginScreen").classList.remove("active");
-  document.getElementById("mainApp").classList.add("active");
-  document.getElementById('userInfo').classList.add('hidden');
-  updateCounts();
-};
-
-function formatDate(dateStr) {
-  const date = new Date(dateStr);
-  
-  const hijriFormatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', { 
-    day: 'numeric', 
-    month: 'long', 
-    year: 'numeric' 
-  });
-  const hijriParts = hijriFormatter.formatToParts(date);
-  const hijriDay = hijriParts.find(part => part.type === 'day').value;
-  const hijriMonth = hijriParts.find(part => part.type === 'month').value;
-  const hijriYear = hijriParts.find(part => part.type === 'year').value;
-  
-  const gregorianFormatter = new Intl.DateTimeFormat('en-US', { 
-    day: 'numeric', 
-    month: 'short', 
-    year: 'numeric' 
-  });
-  const gregorianFormatted = gregorianFormatter.format(date);
-  
-  return `${hijriDay} ${hijriMonth} ${hijriYear} هـ | ${gregorianFormatted}`;
-}
-
-function updateCounts() {
-  ['daily', 'weekly', 'monthly', 'year goal'].forEach(c => {
-    const count = tasks.filter(t => t.cat === c && !t.done).length;
-    const el = document.getElementById(c + 'Count');
-    if (el) el.textContent = count;
-  });
-}
-
-function render() {
-  const list = document.getElementById('tasksList');
-  const filtered = tasks.filter(t => t.cat === cat);
-  if (!filtered.length) {
-    list.innerHTML = `<div style="text-align: center; padding: 40px; color: #666;">${translations[language].empty}</div>`;
-    return;
-  }
-  list.innerHTML = filtered.map(t => `
-    <div class="task-item${t.done ? ' completed' : ''}" data-id="${t.id}">
-      <div class="task-text">${t.text}</div>
-      <div class="task-meta">${formatDate(t.created)}</div>
-      <div class="task-buttons">
-        <button class="task-btn complete-btn">${t.done ? translations[language].cancel : translations[language].complete}</button>
-        <button class="task-btn delete-btn">${translations[language].delete}</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-document.querySelectorAll('.category-tab').forEach(el => {
-  el.onclick = () => {
-    document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
-    el.classList.add('active');
-    cat = el.dataset.cat;
-    render();
-    updateCounts();
-  };
-});
-
-document.getElementById('addBtn').onclick = () => {
-  const val = document.getElementById('taskInput').value.trim();
-  if (val) {
-    tasks.unshift({ id: Date.now(), text: val, cat, done: false, created: new Date().toISOString() });
-    document.getElementById('taskInput').value = '';
-    render();
-    updateCounts();
-  }
-};
-
-document.getElementById('taskInput').addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    document.getElementById('addBtn').click();
-  }
-});
-
-document.getElementById('clearBtn').onclick = () => {
-  if (tasks.length === 0) {
-    alert(language === 'ar' ? 'لا توجد مهام للمسح' : 'No tasks to clear');
-    return;
-  }
-  
-  const userConfirmed = confirm(translations[language].confirmClear);
-  if (userConfirmed) {
-    tasks = [];
-    render();
-    updateCounts();
-  }
-};
-
-document.getElementById('tasksList').addEventListener('click', e => {
-  const item = e.target.closest('.task-item');
-  if (!item) return;
-  const id = +item.dataset.id;
-  if (e.target.classList.contains('complete-btn')) {
-    tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
-    render(); 
-    updateCounts();
-  }
-  if (e.target.classList.contains('delete-btn')) {
-    tasks = tasks.filter(t => t.id !== id);
-    render(); 
-    updateCounts();
-  }
-});
-</script>
 </body>
 </html>
