@@ -287,6 +287,17 @@ window.onload = () => {
   setLanguage(language);
 };
 
+db.collection("tasks").add({
+        email: currentUserEmail,
+        task: taskText,
+        timestamp: serverTimestamp()
+      }).
+  then(() => {
+        document.getElementById("taskInput").value = "";
+        loadTasks();
+      });
+    }
+  
 function parseJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -473,16 +484,6 @@ function handleCredentialResponse(response) {
     function addTask() {
       const taskText = document.getElementById("taskInput").value.trim();
       if (!taskText || !currentUserEmail) return;
-
-      db.collection("tasks").add({
-        email: currentUserEmail,
-        task: taskText,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        document.getElementById("taskInput").value = "";
-        loadTasks();
-      });
-    }
 
     // 4. تحميل المهام للمستخدم الحالي
     function loadTasks() {
