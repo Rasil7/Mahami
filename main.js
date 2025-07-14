@@ -1,9 +1,11 @@
+// استيراد Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import {
   getFirestore, collection, addDoc, getDocs,
   deleteDoc, updateDoc, doc
 } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js";
 
+// إعداد Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBzrkb6xgcyF5aVv3MV3vwJSwieIgyj-ao",
   authDomain: "tasklistweb-43653.firebaseapp.com",
@@ -17,16 +19,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-import {
-  collection, addDoc, getDocs,
-  deleteDoc, updateDoc, doc
-} from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore.js';
-
+// المتغيرات
 let tasks = [];
 let cat = 'daily';
 let userId = null;
 
-// دوال واجهة المستخدم
+// عرض المهام في الواجهة
 function render() {
   const container = document.getElementById("tasksList");
   const filtered = tasks.filter(t => t.cat === cat);
@@ -47,7 +45,7 @@ function render() {
 }
 
 function updateCounts() {
-  // يمكن إضافة عداد لاحقًا
+  // ممكن إضافة عداد لاحقًا
 }
 
 // تحميل المهام من فايربيس
@@ -109,7 +107,7 @@ document.getElementById('clearBtn').onclick = async () => {
   updateCounts();
 };
 
-// التعامل مع تسجيل الدخول بـ Google
+// تحليل توكن Google
 function parseJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -119,6 +117,7 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 
+// عند تسجيل الدخول بـ Google
 function handleCredentialResponse(response) {
   const decoded = parseJwt(response.credential);
   userId = decoded.sub;
@@ -141,12 +140,14 @@ document.getElementById("demoLoginBtn").onclick = () => {
 
 // تسجيل Google
 window.onload = () => {
-  google.accounts.id.initialize({
-    client_id: "647272644166-5vb58i3eacufm2t6stoe2c2qqs1sc9v5.apps.googleusercontent.com",
-    callback: handleCredentialResponse
-  });
-  google.accounts.id.renderButton(
-    document.getElementById("googleSignInBtn"),
-    { theme: "outline", size: "large", text: "signin_with" }
-  );
+  if (window.google && google.accounts && google.accounts.id) {
+    google.accounts.id.initialize({
+      client_id: "647272644166-5vb58i3eacufm2t6stoe2c2qqs1sc9v5.apps.googleusercontent.com",
+      callback: handleCredentialResponse
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("googleSignInBtn"),
+      { theme: "outline", size: "large", text: "signin_with" }
+    );
+  }
 };
