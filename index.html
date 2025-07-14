@@ -6,11 +6,6 @@
   <title>قائمة المهام</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Scheherazade+New&display=swap" rel="stylesheet" />
-   <title> Google وFirebase</title>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
   <style>
     body {
       font-family: 'Amiri', serif;
@@ -287,17 +282,6 @@ window.onload = () => {
   setLanguage(language);
 };
 
-db.collection("tasks").add({
-        email: currentUserEmail,
-        task: taskText,
-        timestamp: serverTimestamp()
-      }).
-  then(() => {
-        document.getElementById("taskInput").value = "";
-        loadTasks();
-      });
-    }
-  
 function parseJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -431,79 +415,6 @@ document.getElementById('tasksList').addEventListener('click', e => {
     updateCounts();
   }
 });
-      // 1. إعداد Firebase
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBzrkb6xgcyF5aVv3MV3vwJSwieIgyj-ao",
-  authDomain: "tasklistweb-43653.firebaseapp.com",
-  projectId: "tasklistweb-43653",
-  storageBucket: "tasklistweb-43653.firebasestorage.app",
-  messagingSenderId: "875266511120",
-  appId: "1:875266511120:web:5df1cf617ebd7784a79595",
-  measurementId: "G-H694DB31BF"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-    let currentUserEmail = null;
-
-function handleCredentialResponse(response) {
-  const decoded = parseJwt(response.credential);
-  isGoogleUser = true;
-  currentUserEmail = decoded.email;
-
-  // إظهار واجهة التطبيق الرئيسية
-  document.getElementById('loginScreen').classList.remove('active');
-  document.getElementById('mainApp').classList.add('active');
-
-  // عرض معلومات المستخدم
-  document.getElementById('userAvatar').src = decoded.picture;
-  document.getElementById('userName').textContent = decoded.name;
-  document.getElementById('userInfo').classList.remove('hidden');
-
-  loadTasks();      // تحميل المهام من Firebase
-  updateCounts();   // تحديث العدادات
-}
-    function parseJwt(token) {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      return JSON.parse(decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join('')));
-    }
-};
-    // 3. إضافة مهمة جديدة
-    function addTask() {
-      const taskText = document.getElementById("taskInput").value.trim();
-      if (!taskText || !currentUserEmail) return;
-
-    // 4. تحميل المهام للمستخدم الحالي
-    function loadTasks() {
-      if (!currentUserEmail) return;
-
-      db.collection("tasks")
-        .where("email", "==", currentUserEmail)
-        .orderBy("timestamp", "desc")
-        .get()
-        .then(snapshot => {
-          const list = document.getElementById("taskList");
-          list.innerHTML = "";
-          snapshot.forEach(doc => {
-            const li = document.createElement("li");
-            li.textContent = doc.data().task;
-            list.appendChild(li);
-          });
-        });
-    }
-
 </script>
 </body>
 </html>
