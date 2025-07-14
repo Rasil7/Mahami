@@ -207,13 +207,6 @@
   </div>
 
   <div class="footer">Developed by Rasil</div>
-    <h2>مهامي</h2>
-  <div id="buttonDiv"></div>
-  <div id="taskSection" style="display:none;">
-    <input type="text" id="taskInput" placeholder="اكتب مهمة جديدة" />
-    <button onclick="addTask()">إضافة</button>
-    <ul id="taskList"></ul>
-  </div>
 
 <script>
 const translations = {
@@ -475,18 +468,6 @@ function handleCredentialResponse(response) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join('')));
     }
-  window.onload = () => {
-  google.accounts.id.initialize({
-    client_id: "647272644166-5vb58i3eacufm2t6stoe2c2qqs1sc9v5.apps.googleusercontent.com"
-    callback: handleCredentialResponse
-  });
-
-  google.accounts.id.renderButton(
-    document.getElementById("googleSignInBtn"), // <-- هذا الزر موجود فعلًا عندك
-    { theme: "outline", size: "large", text: "signin_with" }
-  );
-
-  setLanguage(language);
 };
     // 3. إضافة مهمة جديدة
     function addTask() {
