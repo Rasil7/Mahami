@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>قائمة المهام</title>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -266,7 +265,7 @@
   <div id="loginScreen" class="login-screen active">
     <h1 class="login-title">قائمة المهام</h1>
     <p class="login-subtitle">ابدأ بإدارة مهامك الآن</p>
-    <div id="googleSignInBtn"></div>
+ <button id="googleSignInBtn" class="btn">تسجيل الدخول باستخدام Google</button>
     <p style="margin: 20px 0;">أو</p>
     <button id="demoLoginBtn" class="btn">تجربة التطبيق</button>
   </div>
@@ -599,6 +598,27 @@ document.getElementById('tasksList').addEventListener('click', async (e) => {
     render(); 
     updateCounts();
     await saveTasks();
+  }
+  document.getElementById('googleSignInBtn').addEventListener('click', async () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  try {
+    const result = await auth.signInWithPopup(provider);
+    currentUser = result.user;
+    isGoogleUser = true;
+
+    document.getElementById('loginScreen').classList.remove('active');
+    document.getElementById('mainApp').classList.add('active');
+    document.getElementById('userAvatar').src = currentUser.photoURL;
+    document.getElementById('userName').textContent = currentUser.displayName;
+    document.getElementById('userInfo').classList.remove('hidden');
+    document.getElementById('logoutBtn').classList.remove('hidden');
+
+    await loadTasks();
+    updateCounts();
+  } catch (error) {
+    console.error('Firebase Login Error:', error);
+    alert(language === 'ar' ? 'فشل تسجيل الدخول عبر Google' : 'Google sign-in failed');
   }
 });
 </script>
