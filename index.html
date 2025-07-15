@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,35 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>قائمة المهام</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
- <!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   
-<!-- تحميل Firebase SDK الكلاسيكي -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
-<script>
-  // إعداد Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyBzrkb6xgcyF5aVv3MV3vwJSwieIgyj-ao",
-    authDomain: "tasklistweb-43653.firebaseapp.com",
-    projectId: "tasklistweb-43653",
-    storageBucket: "tasklistweb-43653.appspot.com",
-    messagingSenderId: "875266511120",
-    appId: "1:875266511120:web:5df1cf617ebd7784a79595",
-    measurementId: "G-H694DB31BF"
-  };
+  <script>
+    // إعداد Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBzrkb6xgcyF5aVv3MV3vwJSwieIgyj-ao",
+      authDomain: "tasklistweb-43653.firebaseapp.com",
+      projectId: "tasklistweb-43653",
+      storageBucket: "tasklistweb-43653.appspot.com",
+      messagingSenderId: "875266511120",
+      appId: "1:875266511120:web:5df1cf617ebd7784a79595",
+      measurementId: "G-H694DB31BF"
+    };
 
-  // تهيئة Firebase
-  firebase.initializeApp(firebaseConfig);
+    // تهيئة Firebase
+    firebase.initializeApp(firebaseConfig);
 
-  // إنشاء المراجع للخدمات
-  const db = firebase.firestore();
-  const auth = firebase.auth();
-</script>
+    // إنشاء المراجع للخدمات
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+  </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Scheherazade+New&display=swap" rel="stylesheet" />
   <style>
@@ -46,59 +41,58 @@
       direction: rtl;
     }
 
-          /* Palm Tree Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.1"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>'),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.08"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>');
-            background-size: 300px 400px, 250px 350px;
-            background-position: -50px 20%, calc(100% + 50px) 60%;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            z-index: -1;
-        }
+    /* Palm Tree Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.1"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>'),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22" opacity="0.08"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>');
+      background-size: 300px 400px, 250px 350px;
+      background-position: -50px 20%, calc(100% + 50px) 60%;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: -1;
+    }
 
-        /* Additional Palm Trees */
-        .palm-tree {
-            position: fixed;
-            opacity: 0.06;
-            pointer-events: none;
-            z-index: -1;
-        }
+    /* Additional Palm Trees */
+    .palm-tree {
+      position: fixed;
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: -1;
+    }
 
-        .palm-tree-1 {
-            top: 10%;
-            left: 5%;
-            width: 180px;
-            height: 250px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>') no-repeat center;
-            background-size: contain;
-        }
+    .palm-tree-1 {
+      top: 10%;
+      left: 5%;
+      width: 180px;
+      height: 250px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 200 Q80 150 60 120 Q40 90 20 80 Q50 85 80 100 Q90 110 100 130 Q110 110 120 100 Q150 85 180 80 Q160 90 140 120 Q120 150 100 200 Z"/><rect x="95" y="200" width="10" height="80" fill="%238B4513"/><ellipse cx="100" cy="280" rx="20" ry="8" fill="%23228B22"/></g></svg>') no-repeat center;
+      background-size: contain;
+    }
 
-        .palm-tree-2 {
-            top: 40%;
-            right: 8%;
-            width: 160px;
-            height: 220px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>') no-repeat center;
-            background-size: contain;
-        }
+    .palm-tree-2 {
+      top: 40%;
+      right: 8%;
+      width: 160px;
+      height: 220px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 180 Q85 140 70 115 Q55 90 35 85 Q60 88 85 100 Q95 108 100 125 Q105 108 115 100 Q140 88 165 85 Q145 90 130 115 Q115 140 100 180 Z"/><rect x="95" y="180" width="10" height="70" fill="%238B4513"/><ellipse cx="100" cy="250" rx="18" ry="7" fill="%23228B22"/></g></svg>') no-repeat center;
+      background-size: contain;
+    }
 
-        .palm-tree-3 {
-            bottom: 20%;
-            left: 10%;
-            width: 140px;
-            height: 190px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 160 Q88 125 75 105 Q62 85 45 82 Q65 84 85 92 Q92 98 100 110 Q108 98 115 92 Q135 84 155 82 Q138 85 125 105 Q112 125 100 160 Z"/><rect x="95" y="160" width="10" height="60" fill="%238B4513"/><ellipse cx="100" cy="220" rx="15" ry="6" fill="%23228B22"/></g></svg>') no-repeat center;
-            background-size: contain;
-        }
-
+    .palm-tree-3 {
+      bottom: 20%;
+      left: 10%;
+      width: 140px;
+      height: 190px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><g fill="%23228B22"><path d="M100 160 Q88 125 75 105 Q62 85 45 82 Q65 84 85 92 Q92 98 100 110 Q108 98 115 92 Q135 84 155 82 Q138 85 125 105 Q112 125 100 160 Z"/><rect x="95" y="160" width="10" height="60" fill="%238B4513"/><ellipse cx="100" cy="220" rx="15" ry="6" fill="%23228B22"/></g></svg>') no-repeat center;
+      background-size: contain;
+    }
 
     .lang-toggle {
       position: fixed;
@@ -238,18 +232,34 @@
       gap: 5px;
       justify-content: flex-end;
     }
+    
     #googleSignInBtn {
-  display: flex;
-  justify-content: center;
-  margin: 20px auto;
-}
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+    }
+
+    .logout-btn {
+      background: #f44336;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
   </style>
 </head>
 <body>
-      <div class="palm-tree palm-tree-1"></div>
-    <div class="palm-tree palm-tree-2"></div>
-    <div class="palm-tree palm-tree-3"></div>
-  
+  <div class="palm-tree palm-tree-1"></div>
+  <div class="palm-tree palm-tree-2"></div>
+  <div class="palm-tree palm-tree-3"></div>
 
   <button id="langToggle" class="lang-toggle">English</button>
 
@@ -265,15 +275,16 @@
     <div class="user-info hidden" id="userInfo">
       <img id="userAvatar" class="user-avatar" src="" alt="User" />
       <span id="userName"></span>
+      <button id="logoutBtn" class="logout-btn hidden">تسجيل الخروج</button>
     </div>
 
     <h1 class="title">قائمة المهام</h1>
 
     <div>
-      <div class="category-tab active" data-cat="dailytasks"><span>المهام اليومية</span> <span id="dailyCount">0</span></div>
-      <div class="category-tab" data-cat="weeklytasks"><span>المهام الأسبوعية</span> <span id="weeklyCount">0</span></div>
-      <div class="category-tab" data-cat="monthlytasks"><span>المهام الشهرية</span> <span id="monthlyCount">0</span></div>
-      <div class="category-tab" data-cat="yearlygoals"><span>أهداف السنة</span> <span id="yeargoalCount">0</span></div>
+      <div class="category-tab active" data-cat="dailytasks"><span>المهام اليومية</span> <span id="dailytasksCount">0</span></div>
+      <div class="category-tab" data-cat="weeklytasks"><span>المهام الأسبوعية</span> <span id="weeklytasksCount">0</span></div>
+      <div class="category-tab" data-cat="monthlytasks"><span>المهام الشهرية</span> <span id="monthlytasksCount">0</span></div>
+      <div class="category-tab" data-cat="yearlygoals"><span>أهداف السنة</span> <span id="yearlygoalsCount">0</span></div>
     </div>
 
     <input type="text" id="taskInput" placeholder="أكتب مهمة جديدة..." />
@@ -295,17 +306,19 @@ const translations = {
     complete: "إنجاز",
     cancel: "إلغاء",
     delete: "حذف",
-    daily: "المهام اليومية",
-    weekly: "المهام الأسبوعية",
-    monthly: "المهام الشهرية",
-    "year goal": "الأهداف السنوية",
+    dailytasks: "المهام اليومية",
+    weeklytasks: "المهام الأسبوعية",
+    monthlytasks: "المهام الشهرية",
+    yearlygoals: "أهداف السنة",
     placeholder: "أكتب مهمة جديدة...",
     title: "قائمة المهام",
     subtitle: "ابدأ بإدارة مهامك الآن",
     demo: "تجربة التطبيق",
     signin: "تسجيل الدخول باستخدام Google",
+    signout: "تسجيل الخروج",
     confirmClear: "هل أنت متأكد؟",
-    empty: "لا توجد مهام في هذه الفئة<br>ابدأ بإضافة مهمة جديدة!"
+    empty: "لا توجد مهام في هذه الفئة<br>ابدأ بإضافة مهمة جديدة!",
+    loading: "جاري التحميل..."
   },
   en: {
     add: "Add Task",
@@ -313,24 +326,57 @@ const translations = {
     complete: "Complete",
     cancel: "Undo",
     delete: "Delete",
-    daily: "Daily Tasks",
-    weekly: "Weekly Tasks",
-    monthly: "Monthly Tasks",
-    "year goal": "Yearly Goals",
+    dailytasks: "Daily Tasks",
+    weeklytasks: "Weekly Tasks",
+    monthlytasks: "Monthly Tasks",
+    yearlygoals: "Yearly Goals",
     placeholder: "Write a new task...",
     title: "Task List",
     subtitle: "Start managing your tasks now",
     demo: "Try App",
     signin: "Sign in with Google",
+    signout: "Sign Out",
     confirmClear: "Are you sure?",
-    empty: "No tasks in this category<br>Start by adding one!"
+    empty: "No tasks in this category<br>Start by adding one!",
+    loading: "Loading..."
   }
 };
 
 let language = 'ar';
 let tasks = [];
-let cat = 'daily';
+let currentCategory = 'dailytasks';
+let currentUser = null;
 let isGoogleUser = false;
+
+// Firebase functions
+async function saveTasks() {
+  if (!isGoogleUser || !currentUser) return;
+  
+  try {
+    await db.collection('users').doc(currentUser.uid).set({
+      tasks: tasks,
+      lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch (error) {
+    console.error('Error saving tasks:', error);
+  }
+}
+
+async function loadTasks() {
+  if (!isGoogleUser || !currentUser) return;
+  
+  try {
+    const doc = await db.collection('users').doc(currentUser.uid).get();
+    if (doc.exists) {
+      const data = doc.data();
+      tasks = data.tasks || [];
+      render();
+      updateCounts();
+    }
+  } catch (error) {
+    console.error('Error loading tasks:', error);
+  }
+}
 
 function setLanguage(lang) {
   language = lang;
@@ -342,7 +388,9 @@ function setLanguage(lang) {
   document.querySelector('.title').textContent = translations[lang].title;
   document.getElementById('demoLoginBtn').textContent = translations[lang].demo;
   document.getElementById('langToggle').textContent = lang === 'ar' ? 'English' : 'العربية';
+  document.getElementById('logoutBtn').textContent = translations[lang].signout;
   document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  
   document.querySelectorAll('.category-tab').forEach(tab => {
     const cat = tab.dataset.cat;
     tab.querySelector('span').textContent = translations[lang][cat];
@@ -375,23 +423,57 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 
-function handleCredentialResponse(response) {
+async function handleCredentialResponse(response) {
   const decoded = parseJwt(response.credential);
-  isGoogleUser = true;
-  document.getElementById('loginScreen').classList.remove('active');
-  document.getElementById('mainApp').classList.add('active');
-  document.getElementById('userAvatar').src = decoded.picture;
-  document.getElementById('userName').textContent = decoded.name;
-  document.getElementById('userInfo').classList.remove('hidden');
-  updateCounts();
+  
+  // Sign in to Firebase
+  const credential = firebase.auth.GoogleAuthProvider.credential(response.credential);
+  
+  try {
+    const result = await auth.signInWithCredential(credential);
+    currentUser = result.user;
+    isGoogleUser = true;
+    
+    document.getElementById('loginScreen').classList.remove('active');
+    document.getElementById('mainApp').classList.add('active');
+    document.getElementById('userAvatar').src = decoded.picture;
+    document.getElementById('userName').textContent = decoded.name;
+    document.getElementById('userInfo').classList.remove('hidden');
+    document.getElementById('logoutBtn').classList.remove('hidden');
+    
+    // Load tasks from Firebase
+    await loadTasks();
+    updateCounts();
+  } catch (error) {
+    console.error('Error signing in:', error);
+    alert('خطأ في تسجيل الدخول');
+  }
 }
 
 document.getElementById("demoLoginBtn").onclick = () => {
   isGoogleUser = false;
+  currentUser = null;
+  tasks = [];
   document.getElementById("loginScreen").classList.remove("active");
   document.getElementById("mainApp").classList.add("active");
   document.getElementById('userInfo').classList.add('hidden');
+  document.getElementById('logoutBtn').classList.add('hidden');
   updateCounts();
+};
+
+document.getElementById("logoutBtn").onclick = async () => {
+  try {
+    await auth.signOut();
+    currentUser = null;
+    isGoogleUser = false;
+    tasks = [];
+    document.getElementById("loginScreen").classList.add("active");
+    document.getElementById("mainApp").classList.remove("active");
+    document.getElementById('userInfo').classList.add('hidden');
+    document.getElementById('logoutBtn').classList.add('hidden');
+  } catch (error) {
+    console.error('Error signing out:', error);
+  }
 };
 
 function formatDate(dateStr) {
@@ -418,49 +500,61 @@ function formatDate(dateStr) {
 }
 
 function updateCounts() {
-  ['daily', 'weekly', 'monthly', 'yeargoal'].forEach(c => {
-    const count = tasks.filter(t => t.cat === c && !t.done).length;
-    const el = document.getElementById(c + 'Count');
+  ['dailytasks', 'weeklytasks', 'monthlytasks', 'yearlygoals'].forEach(cat => {
+    const count = tasks.filter(t => t.category === cat && !t.completed).length;
+    const el = document.getElementById(cat + 'Count');
     if (el) el.textContent = count;
   });
 }
 
 function render() {
   const list = document.getElementById('tasksList');
-  const filtered = tasks.filter(t => t.cat === cat);
+  const filtered = tasks.filter(t => t.category === currentCategory);
+  
   if (!filtered.length) {
     list.innerHTML = `<div style="text-align: center; padding: 40px; color: #666;">${translations[language].empty}</div>`;
     return;
   }
-  list.innerHTML = filtered.map(t => `
-    <div class="task-item${t.done ? ' completed' : ''}" data-id="${t.id}">
-      <div class="task-text">${t.text}</div>
-      <div class="task-meta">${formatDate(t.created)}</div>
+  
+  list.innerHTML = filtered.map(task => `
+    <div class="task-item${task.completed ? ' completed' : ''}" data-id="${task.id}">
+      <div class="task-text">${task.text}</div>
+      <div class="task-meta">${formatDate(task.createdAt)}</div>
       <div class="task-buttons">
-        <button class="task-btn complete-btn">${t.done ? translations[language].cancel : translations[language].complete}</button>
+        <button class="task-btn complete-btn">${task.completed ? translations[language].cancel : translations[language].complete}</button>
         <button class="task-btn delete-btn">${translations[language].delete}</button>
       </div>
     </div>
   `).join('');
 }
 
-document.querySelectorAll('.category-tab').forEach(el => {
-  el.onclick = () => {
-    document.querySelectorAll('.category-tab').forEach(tab => tab.classList.remove('active'));
-    el.classList.add('active');
-    cat = el.dataset.cat;
+document.querySelectorAll('.category-tab').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentCategory = tab.dataset.cat;
     render();
-    updateCounts();
   };
 });
 
-document.getElementById('addBtn').onclick = () => {
+document.getElementById('addBtn').onclick = async () => {
   const val = document.getElementById('taskInput').value.trim();
   if (val) {
-    tasks.unshift({ id: Date.now(), text: val, cat, done: false, created: new Date().toISOString() });
+    const newTask = {
+      id: Date.now(),
+      text: val,
+      category: currentCategory,
+      completed: false,
+      createdAt: new Date().toISOString()
+    };
+    
+    tasks.unshift(newTask);
     document.getElementById('taskInput').value = '';
     render();
     updateCounts();
+    
+    // Save to Firebase if logged in
+    await saveTasks();
   }
 };
 
@@ -470,7 +564,7 @@ document.getElementById('taskInput').addEventListener('keypress', (e) => {
   }
 });
 
-document.getElementById('clearBtn').onclick = () => {
+document.getElementById('clearBtn').onclick = async () => {
   if (tasks.length === 0) {
     alert(language === 'ar' ? 'لا توجد مهام للمسح' : 'No tasks to clear');
     return;
@@ -481,22 +575,30 @@ document.getElementById('clearBtn').onclick = () => {
     tasks = [];
     render();
     updateCounts();
+    
+    // Save to Firebase if logged in
+    await saveTasks();
   }
 };
 
-document.getElementById('tasksList').addEventListener('click', e => {
+document.getElementById('tasksList').addEventListener('click', async (e) => {
   const item = e.target.closest('.task-item');
   if (!item) return;
+  
   const id = +item.dataset.id;
+  
   if (e.target.classList.contains('complete-btn')) {
-    tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
+    tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
     render(); 
     updateCounts();
+    await saveTasks();
   }
+  
   if (e.target.classList.contains('delete-btn')) {
     tasks = tasks.filter(t => t.id !== id);
     render(); 
     updateCounts();
+    await saveTasks();
   }
 });
 </script>
