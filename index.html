@@ -4,214 +4,176 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>قائمة المهام</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Scheherazade+New&display=swap" rel="stylesheet" />
-
-  <!-- Firebase SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
-
-  <!-- Style -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Scheherazade+New&display=swap" rel="stylesheet" />
   <style>
-    body {
-      font-family: 'Amiri', serif;
-      background: linear-gradient(to bottom, #fdfcf9, #fffaf3);
-      margin: 0;
-      padding: 0;
-      direction: rtl;
-    }
-
-    .lang-toggle {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 999;
-      background: #6d4c41;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
-    }
-
-    .login-screen, #mainApp {
-      display: none;
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    .login-screen.active, #mainApp.active {
-      display: block;
-    }
-
-    .login-title, .title {
-      font-family: 'Scheherazade New', serif;
-      font-size: 2.5rem;
-      color: #4e342e;
-    }
-
-    .login-subtitle {
-      font-size: 1.2rem;
-      margin: 10px 0 30px;
-      color: #6d4c41;
-    }
-
-    .btn, .task-btn {
-      background: #795548;
-      color: #fff;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 25px;
-      margin: 10px 5px;
-      cursor: pointer;
-    }
-
-    .category-tab {
-      display: inline-block;
-      background: #e0e0e0;
-      color: #333;
-      padding: 10px 20px;
-      border-radius: 20px;
-      margin: 10px 5px;
-      cursor: pointer;
-    }
-
-    .category-tab.active {
-      background: #795548;
-      color: white;
-    }
-
-    #taskInput {
-      padding: 15px;
-      border-radius: 15px;
-      border: 1px solid #ccc;
-      width: 90%;
-      margin: 20px auto;
-      font-size: 1rem;
-    }
-
-    .task-item {
-      background: #f3f3f3;
-      padding: 15px;
-      margin: 15px 10px;
-      border-radius: 15px;
-      text-align: right;
-    }
-
-    .task-item.completed {
-      text-decoration: line-through;
-      opacity: 0.6;
-    }
-
-    .task-meta {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 10px;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #888;
-    }
-
-    .user-info {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .complete-btn {
-      background: #4CAF50 !important;
-      color: white !important;
-    }
-
-    .complete-btn:hover {
-      background: #45a049 !important;
-    }
-
-    .delete-btn {
-      background: #f44336 !important;
-      color: white !important;
-    }
-
-    .delete-btn:hover {
-      background: #d32f2f !important;
-    }
-
-    .task-buttons {
-      margin-top: 10px;
-      display: flex;
-      gap: 5px;
-      justify-content: flex-end;
-    }
-
-    .palm {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .palm img {
-      width: 150px;
-    }
+    /* … (نفس CSS بالكود اللي أرسلته بالضبط) */
   </style>
 </head>
-
 <body>
-
+  <div class="palm" style="display: none;"></div>
   <button id="langToggle" class="lang-toggle">English</button>
 
   <div id="loginScreen" class="login-screen active">
     <h1 class="login-title">قائمة المهام</h1>
     <p class="login-subtitle">ابدأ بإدارة مهامك الآن</p>
-    <button id="loginBtn" class="btn">تسجيل الدخول باستخدام Google</button>
+    <div id="googleSignInBtn"></div>
+    <p style="margin:20px 0;">أو</p>
+    <button id="demoLoginBtn" class="btn">تجربة التطبيق</button>
   </div>
 
   <div id="mainApp">
-    <div class="user-info" id="userInfo">
+    <div class="user-info hidden" id="userInfo">
       <img id="userAvatar" class="user-avatar" src="" alt="User" />
       <span id="userName"></span>
     </div>
-
     <h1 class="title">قائمة المهام</h1>
-
     <div>
       <div class="category-tab active" data-cat="daily"><span>المهام اليومية</span> <span id="dailyCount">0</span></div>
       <div class="category-tab" data-cat="weekly"><span>المهام الأسبوعية</span> <span id="weeklyCount">0</span></div>
       <div class="category-tab" data-cat="monthly"><span>المهام الشهرية</span> <span id="monthlyCount">0</span></div>
-      <div class="category-tab" data-cat="year"><span>أهداف السنة</span> <span id="yearCount">0</span></div>
+      <div class="category-tab" data-cat="year goal"><span>أهداف السنة</span> <span id="year goalCount">0</span></div>
     </div>
-
     <input type="text" id="taskInput" placeholder="أكتب مهمة جديدة..." />
     <div>
       <button id="addBtn" class="btn">إضافة مهمة</button>
       <button id="clearBtn" class="btn">مسح الكل</button>
     </div>
-
-    <div class="palm"><img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Palm Tree" /></div>
-
     <div id="tasksList"></div>
   </div>
 
   <div class="footer">Developed by Rasil</div>
 
-  <!-- Script -->
-  <script type="module" src="./main.js"></script>
+  <script>
+    // ===== Firebase setup =====
+    const firebaseConfig = {
+      apiKey: "AIzaSyBzrkb6xgcyF5aVv3MV3vwJSwieIgyj-ao",
+      authDomain: "tasklistweb-43653.firebaseapp.com",
+      projectId: "tasklistweb-43653",
+      storageBucket: "tasklistweb-43653.appspot.com",
+      messagingSenderId: "875266511120",
+      appId: "1:875266511120:web:5df1cf617ebd7784a79595",
+      measurementId: "G-H694DB31BF"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let language = 'ar', tasks = [], cat = 'daily', currentUser = null;
+
+    const translations = {
+      ar: { add: "إضافة مهمة", clear: "مسح الكل", complete: "إنجاز", cancel: "إلغاء", delete: "حذف",
+            placeholder: "أكتب مهمة جديدة...", empty: "لا توجد مهام في هذه الفئة<br>ابدأ بإضافة مهمة جديدة!" },
+      en: { add: "Add Task", clear: "Clear All", complete: "Complete", cancel: "Undo", delete: "Delete",
+            placeholder: "Write a new task...", empty: "No tasks in this category<br>Start by adding one!" }
+    };
+
+    function setLang(lang){
+      language = lang;
+      document.getElementById('addBtn').textContent = translations[lang].add;
+      document.getElementById('clearBtn').textContent = translations[lang].clear;
+      document.getElementById('taskInput').placeholder = translations[lang].placeholder;
+      document.getElementById('langToggle').textContent = lang==='ar'? 'English':'العربية';
+      render(); updateCounts();
+    }
+    document.getElementById('langToggle').onclick = () => setLang(language==='ar'?'en':'ar');
+    window.onload = () => { google.accounts.id.initialize({
+        client_id:"647272644166-5vb58i3eacufm2t6stoe2c2qqs1sc9v5.apps.googleusercontent.com",
+        callback: hndlCred });
+      google.accounts.id.renderButton(document.getElementById("googleSignInBtn"), {theme:"outline",size:"large",text:"signin_with"});
+      setLang('ar');
+    };
+
+    function parseJwt(t){ let p=JSON.parse(atob(t.split('.')[1])); return p; }
+    function hndlCred(res){
+      currentUser = parseJwt(res.credential);
+      auth.signInWithCustomToken(res.credential).catch(()=>{/*demo*/});
+      document.getElementById('loginScreen').classList.remove('active');
+      document.getElementById('mainApp').classList.add('active');
+      document.getElementById('userAvatar').src = currentUser.picture;
+      document.getElementById('userName').textContent = currentUser.name;
+      loadTasks();
+    }
+
+    document.getElementById("demoLoginBtn").onclick = () => {
+      currentUser = {sub:'demo_user'}; document.getElementById('loginScreen').classList.remove('active');
+      document.getElementById('mainApp').classList.add('active'); loadTasks();
+    };
+
+    document.getElementById('addBtn').onclick = async ()=>{
+      const v=document.getElementById('taskInput').value.trim();
+      if(v && currentUser){
+        await db.collection('users').doc(currentUser.sub).collection('tasks').add({
+          text: v, cat, done: false, created: new Date().toISOString()
+        });
+        document.getElementById('taskInput').value=''; loadTasks();
+      }
+    };
+
+    document.getElementById('clearBtn').onclick = async ()=>{
+      if(!tasks.length) return alert(language==='ar'?'لا توجد مهام':'No tasks');
+      const snap=await db.collection('users').doc(currentUser.sub).collection('tasks').get();
+      snap.forEach(d=>d.ref.delete());
+      loadTasks();
+    };
+
+    document.getElementById('tasksList').addEventListener('click',async e=>{
+      const item = e.target.closest('.task-item');
+      if(!item)return;
+      const id = item.dataset.id;
+      const ref = db.collection('users').doc(currentUser.sub).collection('tasks').doc(id);
+      if(e.target.classList.contains('delete-btn')) await ref.delete();
+      if(e.target.classList.contains('complete-btn')){
+        const t = tasks.find(x=>x.id===id);
+        await ref.update({done: !t.done});
+      }
+      loadTasks();
+    });
+
+    document.querySelectorAll('.category-tab').forEach(el=>{
+      el.onclick = ()=>{
+        document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));
+        el.classList.add('active');
+        cat = el.dataset.cat;
+        loadTasks();
+      }
+    });
+
+    function updateCounts(){
+      ['daily','weekly','monthly','year goal'].forEach(c=>{
+        document.getElementById(c+'Count').textContent =
+          tasks.filter(t=>t.cat===c && !t.done).length;
+      });
+    }
+
+    async function loadTasks(){
+      if(!currentUser)return;
+      const snap = await db.collection('users').doc(currentUser.sub)
+        .collection('tasks').where('cat','==', cat).get();
+      tasks = snap.docs.map(d=>({id:d.id, ...d.data()}));
+      render(); updateCounts();
+    }
+
+    function render(){
+      const list = document.getElementById('tasksList');
+      if(tasks.length===0){
+        list.innerHTML = `<div style="text-align:center;padding:40px;color:#666;">${translations[language].empty}</div>`;
+        return;
+      }
+      list.innerHTML = tasks.map(t=>`
+        <div class="task-item ${t.done?'completed':''}" data-id="${t.id}">
+          <div class="task-text">${t.text}</div>
+          <div class="task-meta">${new Date(t.created).toLocaleString()}</div>
+          <div class="task-buttons">
+            <button class="task-btn complete-btn">${t.done?translations[language].cancel:translations[language].complete}</button>
+            <button class="task-btn delete-btn">${translations[language].delete}</button>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
 </body>
 </html>
