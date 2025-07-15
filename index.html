@@ -270,10 +270,10 @@
     <h1 class="title">قائمة المهام</h1>
 
     <div>
-      <div class="category-tab active" data-cat="daily tasks"><span>المهام اليومية</span> <span id="dailyCount">0</span></div>
-      <div class="category-tab" data-cat="weekly tasks"><span>المهام الأسبوعية</span> <span id="weeklyCount">0</span></div>
-      <div class="category-tab" data-cat="monthly tasks"><span>المهام الشهرية</span> <span id="monthlyCount">0</span></div>
-      <div class="category-tab" data-cat="yearly goals"><span>أهداف السنة</span> <span id="year goalCount">0</span></div>
+      <div class="category-tab active" data-cat="dailytasks"><span>المهام اليومية</span> <span id="dailyCount">0</span></div>
+      <div class="category-tab" data-cat="weeklytasks"><span>المهام الأسبوعية</span> <span id="weeklyCount">0</span></div>
+      <div class="category-tab" data-cat="monthlytasks"><span>المهام الشهرية</span> <span id="monthlyCount">0</span></div>
+      <div class="category-tab" data-cat="yearlygoals"><span>أهداف السنة</span> <span id="yeargoalCount">0</span></div>
     </div>
 
     <input type="text" id="taskInput" placeholder="أكتب مهمة جديدة..." />
@@ -418,7 +418,7 @@ function formatDate(dateStr) {
 }
 
 function updateCounts() {
-  ['daily', 'weekly', 'monthly', 'year goal'].forEach(c => {
+  ['daily', 'weekly', 'monthly', 'yeargoal'].forEach(c => {
     const count = tasks.filter(t => t.cat === c && !t.done).length;
     const el = document.getElementById(c + 'Count');
     if (el) el.textContent = count;
