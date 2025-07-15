@@ -4,36 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>قائمة المهام</title>
-  
-  <!-- Firebase SDKs من النوع Module -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBzrkb6xgcyF5aVv3MV3vwJSwieIgyj-ao",
-      authDomain: "tasklistweb-43653.firebaseapp.com",
-      projectId: "tasklistweb-43653",
-      storageBucket: "tasklistweb-43653.appspot.com",
-      messagingSenderId: "875266511120",
-      appId: "1:875266511120:web:5df1cf617ebd7784a79595",
-      measurementId: "G-H694DB31BF"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    // نُمرر للموديل الرئيسي إعدادات Firebase
-    window.firebase = { auth, db };
-  </script>
-
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Scheherazade+New&display=swap" rel="stylesheet" />
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+  <!-- Style -->
   <style>
-    /* التصميم الأصلي كامل */
     body {
       font-family: 'Amiri', serif;
       background: linear-gradient(to bottom, #fdfcf9, #fffaf3);
@@ -41,126 +22,196 @@
       padding: 0;
       direction: rtl;
     }
-    .palm { display: none; }
+
     .lang-toggle {
-      position: fixed; top: 15px; left: 15px; z-index: 999;
-      background: #6d4c41; color: white; padding: 8px 16px;
-      border-radius: 20px; border: none; cursor: pointer;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 999;
+      background: #6d4c41;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
     }
+
     .login-screen, #mainApp {
-      display: none; padding: 60px 20px; text-align: center;
+      display: none;
+      padding: 60px 20px;
+      text-align: center;
     }
-    .login-screen.active, #mainApp.active { display: block; }
+
+    .login-screen.active, #mainApp.active {
+      display: block;
+    }
+
     .login-title, .title {
       font-family: 'Scheherazade New', serif;
-      font-size: 2.5rem; color: #4e342e;
+      font-size: 2.5rem;
+      color: #4e342e;
     }
+
     .login-subtitle {
-      font-size: 1.2rem; margin: 10px 0 30px;
+      font-size: 1.2rem;
+      margin: 10px 0 30px;
       color: #6d4c41;
     }
+
     .btn, .task-btn {
-      background: #795548; color: #fff;
-      padding: 12px 24px; border: none;
-      border-radius: 25px; margin: 10px 5px;
+      background: #795548;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      margin: 10px 5px;
       cursor: pointer;
     }
+
     .category-tab {
-      display: inline-block; background: #e0e0e0;
-      color: #333; padding: 10px 20px;
-      border-radius: 20px; margin: 10px 5px;
+      display: inline-block;
+      background: #e0e0e0;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 20px;
+      margin: 10px 5px;
       cursor: pointer;
     }
+
     .category-tab.active {
-      background: #795548; color: white;
+      background: #795548;
+      color: white;
     }
+
     #taskInput {
-      padding: 15px; border-radius: 15px;
+      padding: 15px;
+      border-radius: 15px;
       border: 1px solid #ccc;
-      width: 90%; margin: 20px auto;
+      width: 90%;
+      margin: 20px auto;
       font-size: 1rem;
     }
+
     .task-item {
-      background: #f3f3f3; padding: 15px;
-      margin: 15px 10px; border-radius: 15px;
+      background: #f3f3f3;
+      padding: 15px;
+      margin: 15px 10px;
+      border-radius: 15px;
       text-align: right;
     }
+
     .task-item.completed {
-      text-decoration: line-through; opacity: 0.6;
+      text-decoration: line-through;
+      opacity: 0.6;
     }
+
     .task-meta {
-      font-size: 0.9rem; color: #666;
+      font-size: 0.9rem;
+      color: #666;
       margin-bottom: 10px;
     }
+
     .footer {
-      text-align: center; padding: 20px;
-      font-size: 0.9rem; color: #888;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #888;
     }
+
     .user-info {
-      display: flex; justify-content: center;
-      align-items: center; gap: 10px; margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
     }
+
     .user-avatar {
-      width: 40px; height: 40px; border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
     }
-    .hidden { display: none !important; }
+
+    .hidden {
+      display: none !important;
+    }
+
     .complete-btn {
       background: #4CAF50 !important;
       color: white !important;
     }
+
     .complete-btn:hover {
       background: #45a049 !important;
     }
+
     .delete-btn {
       background: #f44336 !important;
       color: white !important;
     }
+
     .delete-btn:hover {
       background: #d32f2f !important;
     }
+
     .task-buttons {
-      margin-top: 10px; display: flex;
-      gap: 5px; justify-content: flex-end;
+      margin-top: 10px;
+      display: flex;
+      gap: 5px;
+      justify-content: flex-end;
     }
-    #googleSignInBtn {
-      display: flex; justify-content: center;
-      margin: 20px auto;
+
+    .palm {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .palm img {
+      width: 150px;
     }
   </style>
 </head>
+
 <body>
-  <div class="palm" style="display: none;"></div>
+
   <button id="langToggle" class="lang-toggle">English</button>
 
   <div id="loginScreen" class="login-screen active">
     <h1 class="login-title">قائمة المهام</h1>
     <p class="login-subtitle">ابدأ بإدارة مهامك الآن</p>
-    <div id="googleSignInBtn"></div>
-    <p style="margin: 20px 0;">أو</p>
-    <button id="demoLoginBtn" class="btn">تجربة التطبيق</button>
+    <button id="loginBtn" class="btn">تسجيل الدخول باستخدام Google</button>
   </div>
 
   <div id="mainApp">
-    <div class="user-info hidden" id="userInfo">
+    <div class="user-info" id="userInfo">
       <img id="userAvatar" class="user-avatar" src="" alt="User" />
       <span id="userName"></span>
     </div>
+
     <h1 class="title">قائمة المهام</h1>
+
     <div>
       <div class="category-tab active" data-cat="daily"><span>المهام اليومية</span> <span id="dailyCount">0</span></div>
       <div class="category-tab" data-cat="weekly"><span>المهام الأسبوعية</span> <span id="weeklyCount">0</span></div>
       <div class="category-tab" data-cat="monthly"><span>المهام الشهرية</span> <span id="monthlyCount">0</span></div>
-      <div class="category-tab" data-cat="year goal"><span>أهداف السنة</span> <span id="year goalCount">0</span></div>
+      <div class="category-tab" data-cat="year"><span>أهداف السنة</span> <span id="yearCount">0</span></div>
     </div>
+
     <input type="text" id="taskInput" placeholder="أكتب مهمة جديدة..." />
     <div>
       <button id="addBtn" class="btn">إضافة مهمة</button>
       <button id="clearBtn" class="btn">مسح الكل</button>
     </div>
+
+    <div class="palm"><img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Palm Tree" /></div>
+
     <div id="tasksList"></div>
   </div>
 
   <div class="footer">Developed by Rasil</div>
-  <script type="module" src="main.js"></script>
+
+  <!-- Script -->
+  <script type="module" src="./main.js"></script>
 </body>
 </html>
