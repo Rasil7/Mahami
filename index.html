@@ -252,7 +252,7 @@
   console.error('Error signing in:', err);
   alert('خطأ في تسجيل الدخول:\n' + err.message);
 }
-
+    }
     document.getElementById("demoLoginBtn").onclick = ()=>{
       isGoogleUser=false; currentUser=null; tasks=[];
       document.getElementById("loginScreen").classList.remove("active");
