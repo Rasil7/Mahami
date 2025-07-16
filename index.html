@@ -213,7 +213,30 @@
       render();
       updateCounts();
     }
+// راقب حالة تسجيل الدخول على طول عمر الصفحة
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    // لو Firebase عنده مستخدم مسجل من قبل
+    currentUser = user;
+    // تحقّق أن المزود هو Google
+    isGoogleUser = user.providerData.some(p => p.providerId === "google.com");
 
+    if (isGoogleUser) {
+      // عرض الواجهة الرئيسية وإخفاء شاشة الدخول
+      document.getElementById("loginScreen").classList.remove("active");
+      document.getElementById("mainApp").classList.add("active");
+      
+      // عَبِّر عن معلومات المستخدم
+      document.getElementById("userAvatar").src = user.photoURL;
+      document.getElementById("userName").textContent = user.displayName;
+      document.getElementById("userInfo").classList.remove("hidden");
+      document.getElementById("logoutBtn").classList.remove("hidden");
+
+      // حمّل المهام المحفوظة
+      await loadTasks();
+    }
+  }
+});
     document.getElementById('langToggle').onclick = ()=> setLanguage(language==='ar'?'en':'ar');
 
     window.onload = ()=>{
