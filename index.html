@@ -23,22 +23,38 @@
     firebase.initializeApp(firebaseConfig);
     const db   = firebase.firestore();
     const auth = firebase.auth();
-    
-    // حفظ المهام في Firestore
-    async function saveTasks() {
-      if (!isGoogleUser || !currentUser) return;
-      try {
-        await db
-          .collection('users')
-          .doc(currentUser.uid)
-          .set({
-            list: tasks,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
-      } catch (e) {
-        console.error('خطأ في حفظ المهام:', e);
-      }
-    }
+    auth.onAuthStateChanged(async user => {
+  if (!user) return;
+  currentUser = user;
+  isGoogleUser = user.providerData.some(p=>p.providerId==="google.com");
+  if (!isGoogleUser) return;
+  document.getElementById("loginScreen").classList.remove("active");
+  document.getElementById("mainApp").classList.add("active");
+  document.getElementById("userAvatar").src = user.photoURL;
+  document.getElementById("userName").textContent = user.displayName;
+  document.getElementById("userInfo").classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.remove("hidden");
+  await loadTasks();
+});
+  // حفظ المهام في Firestore
+async function saveTasks() {
+  if (!isGoogleUser || !currentUser) return;
+  try {
+    await db
+      .collection('users')
+      .doc(currentUser.uid)
+      .set(
+        {
+          list: tasks,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        },
+        { merge: true }    // ← هذا السطر أضِفه هنا
+      );
+    console.log('✅ تم حفظ المهام بنجاح');
+  } catch (e) {
+    console.error('❌ خطأ في حفظ المهام:', e);
+  }
+}
     // تحميل المهام من Firestore
     async function loadTasks() {
       if (!isGoogleUser || !currentUser) return;
@@ -212,28 +228,6 @@
       });
       render();
       updateCounts();
-    }
-// راقب حالة تسجيل الدخول على طول عمر الصفحة
-auth.onAuthStateChanged(async (user) => {
-  if (user) {
-    // لو Firebase عنده مستخدم مسجل من قبل
-    currentUser = user;
-    // تحقّق أن المزود هو Google
-    isGoogleUser = user.providerData.some(p => p.providerId === "google.com");
-
-    if (isGoogleUser) {
-      // عرض الواجهة الرئيسية وإخفاء شاشة الدخول
-      document.getElementById("loginScreen").classList.remove("active");
-      document.getElementById("mainApp").classList.add("active");
-      
-      // عَبِّر عن معلومات المستخدم
-      document.getElementById("userAvatar").src = user.photoURL;
-      document.getElementById("userName").textContent = user.displayName;
-      document.getElementById("userInfo").classList.remove("hidden");
-      document.getElementById("logoutBtn").classList.remove("hidden");
-
-      // حمّل المهام المحفوظة
-      await loadTasks();
     }
   }
 });
